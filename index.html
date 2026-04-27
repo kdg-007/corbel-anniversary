@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>50 Years of Love — Bel & Cornelio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gold:#C9A84C;--gold-l:#E8C97A;--gold-p:#F5E6C0;
+  --cream:#FDF8EF;--warm:#3D2B0A;--rose:#C4707A;
+  --sage:#7A9E7E;--muted:#8B6F47;--dark:#0a0705;
+}
+html,body{height:100%;overflow:hidden;background:var(--dark);}
+
+/* ══ HERO ══ */
+#hero{
+  position:fixed;inset:0;z-index:600;
+  background:var(--cream);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px 28px;
+  transition:opacity .9s ease,transform .9s ease;
+}
+#hero.out{opacity:0;transform:scale(1.04);pointer-events:none;}
+.h-orn{font-size:16px;color:var(--gold);letter-spacing:18px;display:block;margin-bottom:22px;}
+.h-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,9vw,6.5rem);
+  font-style:italic;font-weight:400;color:var(--warm);line-height:1.0;}
+.h-title .amp{color:var(--gold);}
+.h-sub{font-family:'Montserrat',sans-serif;font-size:clamp(.58rem,1.8vw,.78rem);letter-spacing:10px;
+  text-transform:uppercase;color:var(--gold);margin-top:14px;}
+.h-dates{font-family:'Montserrat',sans-serif;font-size:.72rem;letter-spacing:5px;color:var(--muted);margin-top:10px;}
+.h-div{display:flex;align-items:center;gap:14px;max-width:260px;margin:26px auto;}
+.h-div::before,.h-div::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold-l));}
+.h-div::after{background:linear-gradient(to left,transparent,var(--gold-l));}
+.h-div span{color:var(--gold);font-size:.85rem;}
+.h-quote{font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(.9rem,2.4vw,1.15rem);color:var(--muted);
+  max-width:460px;line-height:1.8;margin-bottom:32px;}
+
+#begin-btn{font-family:'Montserrat',sans-serif;font-size:.68rem;letter-spacing:4px;
+  text-transform:uppercase;font-weight:600;color:#fff;background:var(--warm);
+  border:none;border-radius:30px;padding:14px 38px;cursor:pointer;transition:all .25s;
+  box-shadow:0 4px 20px rgba(61,43,10,.25);}
+#begin-btn:hover{background:var(--gold);transform:translateY(-2px);}
+
+/* ══ APP ══ */
+#app{position:fixed;inset:0;display:flex;flex-direction:column;}
+
+/* ══ STAGE ══ */
+#stage{position:relative;flex:1;overflow:hidden;min-height:0;background:var(--dark);}
+
+/* ══ SLIDES ══ */
+.slide{
+  position:absolute;inset:0;opacity:0;pointer-events:none;
+  display:flex;flex-direction:column;
+}
+.slide.active{opacity:1;pointer-events:auto;z-index:2;}
+
+/* Transitions */
+.t-fade-in   {animation:tFI .7s ease forwards;}
+.t-fade-out  {animation:tFO .5s ease forwards;z-index:1;}
+.t-sl-in     {animation:tSLI .65s cubic-bezier(.4,0,.2,1) forwards;}
+.t-sl-out    {animation:tSLO .65s cubic-bezier(.4,0,.2,1) forwards;z-index:1;}
+.t-sr-in     {animation:tSRI .65s cubic-bezier(.4,0,.2,1) forwards;}
+.t-sr-out    {animation:tSRO .65s cubic-bezier(.4,0,.2,1) forwards;z-index:1;}
+.t-zoom-in   {animation:tZI .7s ease forwards;}
+.t-zoom-out  {animation:tZO .5s ease forwards;z-index:1;}
+@keyframes tFI  {from{opacity:0}to{opacity:1}}
+@keyframes tFO  {from{opacity:1}to{opacity:0}}
+@keyframes tSLI {from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:none}}
+@keyframes tSLO {from{opacity:1;transform:none}to{opacity:0;transform:translateX(-70px)}}
+@keyframes tSRI {from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:none}}
+@keyframes tSRO {from{opacity:1;transform:none}to{opacity:0;transform:translateX(70px)}}
+@keyframes tZI  {from{opacity:0;transform:scale(1.07)}to{opacity:1;transform:scale(1)}}
+@keyframes tZO  {from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.95)}}
+
+/* ── IMAGE AREA ── */
+.img-area{
+  flex:1;min-height:0;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.img-area img{
+  max-width:100%;max-height:100%;
+  width:auto;height:auto;
+  object-fit:contain;display:block;
+  /* subtle ken burns on active */
+  transition:transform 6s ease;
+}
+.slide.active .img-area img{transform:scale(1.03);}
+.img-placeholder{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:3rem;color:rgba(201,168,76,.25);
+}
+
+/* Milestone badge */
+.mil-badge{
+  position:absolute;top:16px;right:16px;
+  background:var(--rose);color:#fff;
+  font-family:'Montserrat',sans-serif;font-size:.5rem;
+  letter-spacing:2px;text-transform:uppercase;font-weight:600;
+  padding:5px 12px;border-radius:20px;
+  box-shadow:0 2px 10px rgba(196,112,122,.45);
+  z-index:5;
+}
+
+/* ── CAPTION PANEL ── */
+/* Always visible below the image — no overlay, no gradient */
+.caption-panel{
+  flex-shrink:0;
+  background:rgba(10,7,5,.97);
+  border-top:1px solid rgba(201,168,76,.12);
+  padding:16px 28px 18px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.cap-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.cap-year{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(1.1rem,3vw,1.6rem);color:var(--gold);line-height:1;font-weight:400;
+}
+.cap-group{
+  font-family:'Montserrat',sans-serif;font-size:.55rem;letter-spacing:2px;
+  text-transform:uppercase;color:rgba(255,255,255,.4);
+  border:1px solid rgba(255,255,255,.12);padding:3px 10px;border-radius:20px;
+}
+.cap-milestone{
+  font-family:'Montserrat',sans-serif;font-size:.5rem;letter-spacing:2px;
+  text-transform:uppercase;font-weight:600;color:#fff;background:var(--rose);
+  padding:3px 10px;border-radius:20px;
+}
+.cap-headline{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.15rem,3.5vw,2rem);
+  font-weight:400;color:#fff;line-height:1.25;
+}
+.cap-text{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(.78rem,2vw,1rem);
+  color:rgba(255,255,255,.65);line-height:1.65;font-weight:300;
+  max-width:780px;
+}
+.cap-place{
+  font-family:'Montserrat',sans-serif;font-size:.6rem;letter-spacing:2px;
+  color:var(--sage);display:flex;align-items:center;gap:5px;margin-top:2px;
+}
+
+/* ── YEAR DIVIDER SLIDE ── */
+.slide.year-div .img-area{
+  background:radial-gradient(ellipse at center, rgba(201,168,76,.08) 0%, transparent 70%);
+  flex-direction:column;gap:8px;
+}
+.ydiv-num{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(5rem,18vw,12rem);color:var(--gold);line-height:1;
+  opacity:.18;
+}
+.ydiv-label{
+  font-family:'Montserrat',sans-serif;font-size:clamp(.6rem,2vw,.9rem);
+  letter-spacing:8px;text-transform:uppercase;color:rgba(255,255,255,.35);
+}
+.ydiv-count{
+  font-family:'Montserrat',sans-serif;font-size:.6rem;letter-spacing:4px;
+  text-transform:uppercase;color:rgba(201,168,76,.5);margin-top:8px;
+}
+.ydiv-ornament{font-size:1.4rem;color:var(--rose);margin-top:16px;opacity:.7;}
+
+/* ── ARROWS ── */
+.arr{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  color:#fff;width:44px;height:44px;border-radius:50%;font-size:1.1rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;backdrop-filter:blur(6px);
+}
+.arr:hover{background:rgba(201,168,76,.2);border-color:var(--gold);}
+.arr:disabled{opacity:.12;cursor:default;}
+#arr-p{left:14px;}#arr-n{right:14px;}
+
+/* ── HUD ── */
+#counter{
+  position:absolute;top:14px;right:16px;z-index:10;
+  font-family:'Montserrat',sans-serif;font-size:.58rem;letter-spacing:2px;
+  color:rgba(255,255,255,.55);background:rgba(0,0,0,.3);
+  padding:5px 13px;border-radius:20px;backdrop-filter:blur(6px);
+}
+#ch-btn{
+  position:absolute;top:14px;left:16px;z-index:10;
+  font-family:'Montserrat',sans-serif;font-size:.53rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.6);background:rgba(0,0,0,.3);
+  border:1px solid rgba(255,255,255,.12);padding:5px 13px;border-radius:20px;
+  cursor:pointer;backdrop-filter:blur(6px);transition:all .2s;
+}
+#ch-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ── CHAPTER DRAWER ── */
+#ch-drawer{
+  position:absolute;top:48px;left:16px;z-index:20;
+  background:rgba(10,7,5,.95);border:1px solid rgba(201,168,76,.18);
+  border-radius:12px;padding:12px;backdrop-filter:blur(14px);
+  display:none;flex-direction:column;gap:5px;
+  max-height:72vh;overflow-y:auto;min-width:200px;
+}
+#ch-drawer.open{display:flex;}
+.ch-opt{
+  font-family:'Montserrat',sans-serif;font-size:.58rem;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.55);background:none;
+  border:1px solid rgba(255,255,255,.08);border-radius:20px;
+  padding:7px 13px;cursor:pointer;transition:all .2s;text-align:left;
+}
+.ch-opt:hover{border-color:var(--gold);color:var(--gold);}
+.ch-opt.active{background:var(--gold);border-color:var(--gold);color:#fff;font-weight:600;}
+
+/* ── SWIPE HINT ── */
+#swipe-hint{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  font-family:'Montserrat',sans-serif;font-size:.5rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.25);z-index:5;pointer-events:none;
+  animation:hintFade 4s ease 2.5s forwards;white-space:nowrap;
+}
+@keyframes hintFade{0%{opacity:1}70%{opacity:1}100%{opacity:0}}
+
+/* ── CONTROLS BAR ── */
+#bar{
+  flex-shrink:0;background:rgba(8,5,3,.98);
+  border-top:1px solid rgba(201,168,76,.08);
+  padding:8px 16px 10px;display:flex;flex-direction:column;gap:8px;
+}
+#scrub{
+  position:relative;height:3px;background:rgba(255,255,255,.08);
+  border-radius:2px;cursor:pointer;
+}
+#scrub-fill{height:100%;border-radius:2px;
+  background:linear-gradient(to right,var(--gold-l),var(--gold));
+  transition:width .2s ease;pointer-events:none;}
+#scrub-thumb{
+  position:absolute;top:50%;transform:translate(-50%,-50%);
+  width:13px;height:13px;border-radius:50%;
+  background:var(--gold);border:2px solid #fff;pointer-events:none;
+  box-shadow:0 0 8px rgba(201,168,76,.5);
+}
+#play-row{display:flex;align-items:center;gap:10px;}
+#btn-play{
+  width:38px;height:38px;border-radius:50%;background:var(--gold);
+  border:none;color:#fff;font-size:.95rem;cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;box-shadow:0 2px 12px rgba(201,168,76,.35);
+}
+#btn-play:hover{transform:scale(1.1);}
+.bar-btn{
+  font-family:'Montserrat',sans-serif;font-size:.52rem;letter-spacing:1px;
+  color:rgba(255,255,255,.4);background:none;
+  border:1px solid rgba(255,255,255,.12);border-radius:20px;
+  padding:4px 10px;cursor:pointer;transition:all .2s;flex-shrink:0;
+}
+.bar-btn:hover{border-color:var(--gold);color:var(--gold);}
+#ch-label{
+  flex:1;min-width:0;font-family:'Montserrat',sans-serif;font-size:.52rem;
+  letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ── QR MODAL ── */
+#qr-modal{
+  position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.75);
+  backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;
+}
+#qr-modal.open{display:flex;}
+#qr-box{
+  background:var(--cream);border-radius:16px;
+  padding:28px;text-align:center;max-width:280px;width:90%;
+}
+#qr-box h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--warm);margin-bottom:6px;}
+#qr-box p{font-family:'Montserrat',sans-serif;font-size:.58rem;letter-spacing:.5px;
+  color:var(--muted);margin-bottom:14px;line-height:1.6;}
+#qr-url{width:100%;padding:8px;border-radius:6px;font-size:.7rem;
+  border:1px solid rgba(201,168,76,.3);margin-bottom:8px;outline:none;}
+#qr-url:focus{border-color:var(--gold);}
+#qr-gen{width:100%;padding:9px;background:var(--gold);color:#fff;border:none;
+  border-radius:8px;font-family:'Montserrat',sans-serif;font-size:.6rem;
+  letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-bottom:14px;}
+#qr-out{display:flex;justify-content:center;margin-bottom:8px;}
+#qr-close{background:none;border:none;color:var(--muted);font-family:'Montserrat',sans-serif;
+  font-size:.62rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .caption-panel{padding:12px 16px 14px;gap:4px;}
+  .cap-headline{font-size:clamp(1rem,4vw,1.4rem);}
+  .cap-text{font-size:clamp(.72rem,2.5vw,.85rem);}
+  .arr{width:36px;height:36px;font-size:.9rem;}
+  #arr-p{left:8px;}#arr-n{right:8px;}
+  .ydiv-num{font-size:clamp(4rem,22vw,8rem);}
+}
+@media(max-width:380px){
+  .cap-headline{font-size:1rem;}
+  .cap-text{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div id="hero">
+  <span class="h-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
+  <h1 class="h-title">Bel <span class="amp">&</span> Cornelio</h1>
+  <p class="h-sub">Fifty Years of Love</p>
+  <p class="h-dates">May 1, 1976 &nbsp;—&nbsp; May 1, 2026</p>
+  <div class="h-div"><span>♥</span></div>
+  <p class="h-quote">"Two lives, one journey — through faith, family, and the beautiful adventure of loving each other for fifty years."</p>
+
+  <button id="begin-btn">Begin the Journey ▶</button>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div id="stage">
+    <button class="arr" id="arr-p">‹</button>
+    <button class="arr" id="arr-n">›</button>
+    <div id="counter"></div>
+    <button id="ch-btn">☰ Chapters</button>
+    <div id="ch-drawer"></div>
+    <div id="swipe-hint">← swipe to navigate →</div>
+  </div>
+  <div id="bar">
+    <div id="scrub">
+      <div id="scrub-fill" style="width:0%"></div>
+      <div id="scrub-thumb" style="left:0%"></div>
+    </div>
+    <div id="play-row">
+      <button id="btn-play">▶</button>
+      <button class="bar-btn" id="btn-speed">3s</button>
+      <span id="ch-label">—</span>
+      <button class="bar-btn" id="btn-home">⌂ Home</button>
+      <button class="bar-btn" id="btn-qr">⊞ QR</button>
+    </div>
+  </div>
+</div>
+
+<!-- QR -->
+<div id="qr-modal">
+  <div id="qr-box">
+    <h3>Share This Story</h3>
+    <p>Paste your hosted URL to generate a QR code for the celebration</p>
+    <input id="qr-url" type="url" placeholder="https://your-site.netlify.app">
+    <button id="qr-gen">Generate QR Code</button>
+    <div id="qr-out"></div>
+    <button id="qr-close">Close</button>
+  </div>
+</div>
+
+<script>
+const events = [[1960, "Bel’s Graduation", "Before their story became one, Bel had already begun her own path as an educator.", "https://drive.google.com/file/d/12NLN-GtovHqaFCEJyov1AiIyO5QGPoAb/view", "Before Us", "Albay Normal School", false], [1966, "Cornelio’s Graduation", "Cornelio’s own journey began with study, ambition, and a widening view of the world.", "https://drive.google.com/file/d/1aAS7Y-KmZZglZzAuBeIUfvMCJ1w4Mvdq/view", "Before Us", "Ateneo de Manila University", false], [1975, "First Photo Together", "In 1975, two separate stories began to become one shared journey.", "https://drive.google.com/file/d/1bdiiIBTI737g86CYhoVdgQ-DZYt74g_q/view", "The Beginning", "Camalig, Albay", true], [1976, "Wedding Day", "On May 1, 1976, Bel and Cornelio began the journey that would carry them across five decades.", "https://drive.google.com/file/d/13na9BDYqPkAkiJtae9EN8bpL-4_8vtPk/view", "Wedding Day", "Santuario de San Antonio, Forbes Park, Makati", true], [1976, "The First Kiss", "A joyful moment, and the first of many memories as husband and wife.", "https://drive.google.com/file/d/1M7okGmHf8LU31M0g1Ux6nysjdeM9mBOg/view", "Wedding Day", "Santuario de San Antonio, Makati", false], [1976, "With the Wedding Minister", "Their wedding was blessed by Fr. Herman Salvosa, a dear friend and Franciscan priest.", "https://drive.google.com/file/d/1UzCkMu6pK6wcbMorfqmozwzNlVi4Y0P5/view", "Wedding Day", "Santuario de San Antonio, Makati", false], [1976, "Their Parents", "Their marriage joined not only two people, but two families and generations of love.", "https://drive.google.com/file/d/10j2Ua-netxH3UVeD-6-s7_ytVDlIMKZz/view", "Wedding Day", "", false], [1976, "Wedding Group Portrait", "The wedding day gathered the people who stood around them at the start of their life together.", "https://drive.google.com/file/d/15hv95YkIghyVJct_k9bNweBU5wowWp2F/view", "Wedding Day", "Santuario de San Antonio, Makati", false], [1976, "Family Blessings", "The wedding was surrounded by the presence and blessing of their families.", "https://drive.google.com/file/d/1Ny-MMA5NtatS3PFi8S8CmPsNYw24-qUk/view", "Wedding Day", "Santuario de San Antonio, Makati", false], [1976, "Cutting the Wedding Cake", "The celebration continued with family, friends, and the first sweet slice of married life.", "https://drive.google.com/file/d/1cZblcATvcVhc09qfLxRvRMTcQBqHW12g/view", "Wedding Day", "Aberdeen Resto, Makati", false], [1976, "First Home in Cainta", "Their married life took root in a home of their own, where everyday memories began to accumulate.", "https://drive.google.com/file/d/1lsrx6rsTadAyr8Jfw_H23KPmPSRUCV8J/view", "Building a Home", "Kasibulan Village, Cainta, Rizal", false], [1976, "Simple Days at Home", "The early years were not only about ceremonies, but quiet afternoons, routines, and simple happiness.", "https://drive.google.com/file/d/1JhsclzRrCG90RbffwodW4nFUDEvr1w8c/view", "Building a Home", "Cainta, Rizal", false], [1976, "The Friends Who Introduced Them", "Every love story has its helpers; theirs included Kuya Rolly and Ate Auring, who brought them together.", "https://drive.google.com/file/d/12JmyaKg-DCsmqJ9PPmlAAXxp5MmdXQCX/view", "The Beginning", "Cainta, Rizal", false], [1977, "First Wedding Anniversary", "One year later, they returned to where their married life began, marking the first of many anniversaries.", "https://drive.google.com/file/d/19tJFle6p6YeeDGSWiGHjBlEAmpVfpIwu/view", "Building a Home", "Santuario de San Antonio, Makati", false], [1978, "First Trip to Bicol", "Their travels together began early, with a return to Bicol in 1978.", "https://drive.google.com/file/d/1EaN02zvjYBj79FiC4hULA_uBIao1XMlc/view", "Early Journeys", "Bicol", false], [1978, "Cagsawa Ruins", "At Cagsawa, they captured one of the early landmarks of their shared travels.", "https://drive.google.com/file/d/1CBewMp0-CHtFiyBglnpRvy4-powjc2q4/view", "Early Journeys", "Cagsawa Ruins, Albay", false], [1980, "Bel’s Hong Kong Departure", "Bel’s 1980 trip to Hong Kong reflected a life of learning, service, and professional growth.", "https://drive.google.com/file/d/1RiF1W1x5DITJQf1zJt6UG90dVJDQCueM/view", "Purpose and Service", "Hong Kong", false], [1980, "Macao Visit", "Bel’s travels extended to Macao, adding new places and stories to their growing life album.", "https://drive.google.com/file/d/1dwdCw5JJ68ouVxXo2DfRwctC5bQuEj9M/view", "Early Journeys", "Macao", false], [1981, "Cornelio’s First World Trip", "Cornelio’s first trip around the world came through official business, opening another chapter of wider horizons.", "https://drive.google.com/file/d/19gNS97VAiFjBYjrPXWgjyAw9jWEIgen-/view", "Purpose and Service", "United States and Germany", false], [1983, "Bel at the Special Olympics", "Bel served as one of five coaches of the Philippine Delegation to the International Special Olympics.", "https://drive.google.com/file/d/10_J01iWcBqMXKZ8RxUoBLGvIVlyCpcN-/view", "Purpose and Service", "Baton Rouge, Louisiana, USA", true], [1983, "Museum of Natural History", "Her travels in the United States also brought moments of discovery and learning.", "https://drive.google.com/file/d/1I5k6ekyR_oew2VywrvWvmVjbg-b12yzG/view", "Purpose and Service", "New York", false], [1983, "Arlington Visit", "Bel visited President John F. Kennedy’s grave at Arlington Cemetery during her U.S. trip.", "https://drive.google.com/file/d/1IR0Itw81balPJQzJo5FcX_dcgZG82AQ0/view", "Purpose and Service", "Washington, D.C.", false], [1984, "Hidden Valley", "Life together also included rest, leisure, and small escapes close to home.", "https://drive.google.com/file/d/16-UmlX3C-47L1Q6m8cE1Ry6cncy2SxQs/view", "Shared Life", "Alaminos, Laguna", false], [1985, "The First Flood at Home", "Not every memory was easy, but even the difficult days became part of the story they carried together.", "https://drive.google.com/file/d/1DPfurFAYn1QMACa11orsU6rZvNBGvoEJ/view", "Through Difficult Days", "Home", false], [1985, "A Formal Evening", "Their life together was filled with civic, church, and community occasions.", "https://drive.google.com/file/d/12gjtY0nZUNCIEO3JjUXQ_d_g6yZ3TRpe/view", "Family and Community", "Hotel Nikko Manila Garden", false], [1985, "Southern Tour in Cebu", "Their travels around the Philippines brought them to Cebu and the Magellan Cross Shrine.", "https://drive.google.com/file/d/1-Qxv6RyX-npyJWt-s2_au6I5UwnJVATO/view", "Philippine Journeys", "Cebu", false], [1986, "10th Wedding Anniversary", "Ten years after their wedding, they celebrated the first major decade of married life.", "https://drive.google.com/file/d/1NhLxLZQU6uPwdGSbAMCRYLjLomGEjGO7/view", "Milestones", "Home", true], [1986, "Cornelio’s 42nd Birthday", "Birthdays and home celebrations became part of the rhythm of family life.", "https://drive.google.com/file/d/1a-D5BsnQDg5WI4ZGuzOut_q1t0COly5u/view", "Family and Community", "Home", false], [1988, "Banaue Rice Terraces", "They explored the iconic landscapes of the Philippines, including Banaue in 1988.", "https://drive.google.com/file/d/1TUY7u-O5V6W4NB6PcyHhqeGwXfa90sco/view", "Philippine Journeys", "Banaue", false], [1988, "Sagada Cave", "Their travels led them even into the caves of Sagada, adding adventure to their shared life.", "https://drive.google.com/file/d/113Fbqqx_J8keyzWhsZF8Y0jO3hnWMRkK/view", "Philippine Journeys", "Sagada, Mountain Province", false], [1990, "Baguio and PMA", "They visited the Philippine Military Academy in Baguio, another marker in their Philippine travels.", "https://drive.google.com/file/d/1MQ-6_Vgw9YDRUemSvOnacbJkL3czBTZq/view", "Philippine Journeys", "Baguio City", false], [1990, "White Island, Camiguin", "Their journey across the islands brought them to the bright sandbar of White Island.", "https://drive.google.com/file/d/13xfY8YuX3TFbx3C6a-KOKeLSR5Ybowop/view", "Philippine Journeys", "Camiguin", false], [1994, "Chocolate Hills", "In Bohol, they visited one of the country’s most memorable landscapes.", "https://drive.google.com/file/d/122B_fAmRwpLa4Kvn18GWcA2tq_0hGNuk/view", "Philippine Journeys", "Bohol", false], [1994, "Loboc Floating Restaurant", "Their Bohol trip also included lunch on Loboc’s floating restaurant.", "https://drive.google.com/file/d/10Ea-KA86CMmiB8zc6re8AtqgUnguUS5Q/view", "Philippine Journeys", "Loboc, Bohol", false], [1996, "20th Wedding Anniversary", "By 1996, their marriage had reached twenty years - two decades of shared memories.", "https://drive.google.com/file/d/1Ux4bjmZqKPq3zpVOzyekr9vPJ5bOgEau/view", "Milestones", "PEB", true], [1996, "Pico de Loro", "Their life together continued outdoors, with scenic trips and active memories.", "https://drive.google.com/file/d/1RfwFG3zCeuqtycwv4sxcN5f0YA9R0DTI/view", "Philippine Journeys", "Nasugbu, Batangas", false], [1997, "Antipolo View Deck", "At Antipolo, they added another simple travel memory to their growing album.", "https://drive.google.com/file/d/1JcmsWzpzk8KdCXlrJOjd8LDLOHykmhjO/view", "Philippine Journeys", "Antipolo", false], [2000, "Departure for the Holy Land", "In 2000, they set out for their Jubilee Year tour of the Holy Land, Rome, and Lourdes.", "https://drive.google.com/file/d/1WuY5HnDFnPM1c-wWqJrW8MdGuN99JP0P/view", "Faith Pilgrimage", "Hong Kong International Airport", true], [2000, "Church of Cana", "In Cana, their pilgrimage connected their marriage story to a sacred place associated with weddings and blessing.", "https://drive.google.com/file/d/1FDPBMMftYJ1T58h6y32Es58MOAEHbEPE/view", "Faith Pilgrimage", "Cana", false], [2000, "Mt. Tabor", "At Mt. Tabor, they visited the place associated with the Transfiguration.", "https://drive.google.com/file/d/12aBNetcxvWIc2G6M9nf9djm3hGlXjkg6/view", "Faith Pilgrimage", "Mt. Tabor", false], [2000, "Capernaum", "At Capernaum, they visited places tied to the early life of the Church.", "https://drive.google.com/file/d/1eG4SCvnvXLbdq8GJuMMGDyFO63FhpCjp/view", "Faith Pilgrimage", "Capernaum", false], [2000, "Jerusalem from Mt. Olives", "Overlooking Jerusalem, the journey became one of reflection as much as travel.", "https://drive.google.com/file/d/1Rfo0CKZnBn0V4IoJVrFrvnqUH3mxQecW/view", "Faith Pilgrimage", "Mt. Olives, Jerusalem", false], [2000, "Bethlehem", "Their Jubilee Year pilgrimage brought them to the place remembered as the birthplace of Jesus.", "https://drive.google.com/file/d/1AEFuWzK949Vhnm6SiN7DUhsFRfSrew40/view", "Faith Pilgrimage", "Bethlehem", false], [2000, "The Wailing Wall", "Their Jerusalem visit included the Wailing Wall, one of the city’s most enduring sacred places.", "https://drive.google.com/file/d/1K4M8vAq8iTgN8wNajZLmEcwe1lF7KZEZ/view", "Faith Pilgrimage", "Jerusalem", false], [2000, "Dome of the Rock", "Their Holy Land journey placed them before Jerusalem’s most recognizable sacred landmarks.", "https://drive.google.com/file/d/1FY6YpiaxP4Ypo38CMw7ZwdPBFlVFWwPa/view", "Faith Pilgrimage", "Jerusalem", false], [2000, "Church of the Holy Sepulcher", "Inside the Church of the Holy Sepulcher, their pilgrimage reached one of Christianity’s most solemn sites.", "https://drive.google.com/file/d/1Jxh1sOPrn98hK-loDUk45QiLIBvj0IN6/view", "Faith Pilgrimage", "Jerusalem", false], [2000, "Lourdes", "At Lourdes, their pilgrimage continued in a place of prayer, procession, and devotion.", "https://drive.google.com/file/d/1-NPSIhXPikJiVDMfW-v5lt0rRCItjkL0/view", "Faith Pilgrimage", "Lourdes, France", false], [2000, "St. Peter’s Basilica", "In Rome, they stood before St. Peter’s Basilica during their Jubilee Year pilgrimage.", "https://drive.google.com/file/d/180N_fT-RG62tKU-nyuAyID85qfoawFT3/view", "Faith Pilgrimage", "Rome", false], [2000, "Trevi Fountain", "Their European pilgrimage also left room for joyful travel moments in Rome.", "https://drive.google.com/file/d/1vyvk5jjGfPr_YS4OLwF2MNt1JlCSR-a6/view", "Faith Pilgrimage", "Rome", false], [2002, "Paete Falls", "At Matabunca Falls, they returned to Philippine landscapes and family roots.", "https://drive.google.com/file/d/1Cg8Uq0O6XScZyIDY66kbLa9-wDFJrmhE/view", "Philippine Journeys", "Paete, Laguna", false], [2006, "First Boracay Trip", "Boracay became part of their shared travel map, adding sea, sand, and celebration.", "https://drive.google.com/file/d/187EVb7AvbOwMG9t9s3ih_Mytezb-2z-U/view", "Global and Local Adventures", "Boracay", false], [2006, "Macau Evening Stroll", "Their Macau trip added another easygoing chapter of travel together.", "https://drive.google.com/file/d/11cMYlj-vnSJgFJfnn2qxvUXftq5E0JWI/view", "Global and Local Adventures", "Macau", false], [2008, "Ria’s Graduation in Medicine", "Family milestones became part of the story, including Ria’s graduation in medicine.", "https://drive.google.com/file/d/10LuhFG-KzCRV5zSJeIWyavPOjJYC8izN/view", "Family and Legacy", "", true], [2008, "Bird’s Nest Stadium", "In Beijing, they visited landmarks connected with the 2008 Olympic Games.", "https://drive.google.com/file/d/1cC35EznHaf5qdX83KuLiFk_tY1vmJOcS/view", "Global and Local Adventures", "Beijing", false], [2008, "Forbidden City", "Their Beijing visit included the grounds of the Forbidden City.", "https://drive.google.com/file/d/18LwcM4NWr3y6UguAPcWKleZE78cCCvyq/view", "Global and Local Adventures", "Beijing", false], [2008, "Temple of Heaven", "Among century-old trees and grand temples, they experienced historic Beijing together.", "https://drive.google.com/file/d/17INjLj2Vo-IltQ39aSc1xGku9uLQE2dG/view", "Global and Local Adventures", "Beijing", false], [2008, "Palawan Underground River", "In Palawan, they reached the entrance of the Underground River, one of the country’s natural wonders.", "https://drive.google.com/file/d/1IGVjAX4qpWEGId-hmoYAeeP0QPIQUDGH/view", "Global and Local Adventures", "Palawan", false], [2009, "Singapore Sojourn", "Singapore became another stop in their continuing life of travel and discovery.", "https://drive.google.com/file/d/1GgAAW-8xTltyz9j37ZqzIEPlAhInqEkv/view", "Global and Local Adventures", "Singapore", false], [2010, "Wedding Sponsors", "Their marriage also placed them in the lives of other couples as sponsors and witnesses.", "https://drive.google.com/file/d/156DXWQW4_iW8Ya8HE8Xm4BlvDbv5O770/view", "Family and Legacy", "", false], [2010, "Recovery at Home", "After Cornelio’s quadruple bypass operation, home became a place of recovery, care, and gratitude.", "https://drive.google.com/file/d/1bCI_K0eEguKnsy_uMmjIjzGRUtjjVgCT/view", "Through Difficult Days", "Home", true], [2011, "Bali Escapade", "Their first Bali escapade added temples, culture, and new scenery to their shared adventures.", "https://drive.google.com/file/d/1DLFTj7dF5kol2UKV2JCoxbWEkTiBdmw9/view", "Global and Local Adventures", "Bali, Indonesia", false], [2011, "Bangkok and the Golden Buddha", "Thailand brought memorable moments of culture, animals, and celebration.", "https://drive.google.com/file/d/1F4lLgiuQtUSZdSEELWGo-fqaqHSxB-PO/view", "Global and Local Adventures", "Bangkok, Thailand", false], [2012, "Bel’s Birthday", "Bel’s birthday celebration in 2012 added another joyful family milestone.", "https://drive.google.com/file/d/13wQ0AONVwaXo4_3zRprl-AjsjMgrRVr3/view", "Family and Legacy", "Sambokojin Resto", false], [2012, "Another Wedding Story", "They continued to stand with others during important family and community occasions.", "https://drive.google.com/file/d/1jTDzZBTkSwV-pPP7Wjwfvz54MwJxQZX3/view", "Family and Legacy", "Silang, Cavite", false], [2012, "Pisa", "In Italy, they stood before the Cathedral and Leaning Tower of Pisa.", "https://drive.google.com/file/d/1IfRylk9GIz6jqvaPowbGFykB7FfrhFVE/view", "European Tour", "Pisa, Italy", false], [2012, "Rome Coliseum", "Their European tour included Rome and one of the ancient world’s most recognizable monuments.", "https://drive.google.com/file/d/1aCBKW6BK6I-t_tKW6pBMotc8VCHnCqDI/view", "European Tour", "Rome", false], [2012, "Venice Gondola Ride", "Venice gave them one of the classic travel memories of Europe: a gondola ride.", "https://drive.google.com/file/d/16D0uuRFLHgqHOUEZW2bd-X2-WXUTuasA/view", "European Tour", "Venice, Italy", false], [2012, "Mt. Titlis", "Their European journey reached the snow and heights of Mt. Titlis in Switzerland.", "https://drive.google.com/file/d/1Rq5CKt_BPIsShlJykRNoX6XtVsb5ZEiI/view", "European Tour", "Engelberg, Switzerland", false], [2016, "40th Wedding Anniversary", "Forty years later, they celebrated a marriage that had already become a lifetime of stories.", "https://drive.google.com/file/d/1A1tLGXAtScyYR9C2GJUtA__hYqsHvuz-/view", "Milestones", "Punta Fuego, Nasugbu, Batangas", true], [2019, "43rd Anniversary in Boracay", "On their 43rd wedding anniversary, they returned to Boracay for sea, sunrise, and another year of choosing each other.", "https://drive.google.com/file/d/1RsYwN_FbG7KRdoH-6pGKyRIkbPktmk6l/view", "Golden Years", "Boracay", true], [2019, "Bel’s 70th Birthday", "Bel’s 70th birthday gathered family and friends in celebration and gratitude.", "https://drive.google.com/file/d/1PIlFbS6A1LT4pZKoXBJYU-q2bY1ZDReR/view", "Golden Years", "Dona Juanita Resto, Barrio Kapitolyo, Pasig", true], [2020, "Bohol Revisited", "The later travel years still carried them to familiar places of beauty and memory.", "https://drive.google.com/file/d/11D82HUhiMcs6AOAgvx1u7p_PKrR5fLST/view", "Golden Years", "Bohol", false], [2020, "Escorting Jun", "Even in the later years, they remained present in the milestones of family and friends.", "https://drive.google.com/file/d/1B0t_tZipwXHIRQJ6mGpl7iC1t419Fl7G/view", "Family and Legacy", "", false], [2020, "Home in the Later Years", "After decades of journeys, home remained one of the most meaningful places in their story.", "https://drive.google.com/file/d/1XCGx6-QaCtoW7zbG00zb2QCE34yFYAcA/view", "Golden Years", "Home", true]];
+
+/* ── Helpers ── */
+function xid(url){const m=url.match(/\/d\/([a-zA-Z0-9_-]+)/);return m?m[1]:null;}
+function imgUrl(id){return`https://drive.google.com/thumbnail?id=${id}&sz=w1600`;}
+function mkImg(id,alt){
+  if(!id)return`<div class="img-placeholder">📷</div>`;
+  return`<img src="${imgUrl(id)}" alt="${alt||''}"
+    data-id="${id}" data-fb="0"
+    onerror="var f=['https://lh3.googleusercontent.com/d/'+this.dataset.id];var i=parseInt(this.dataset.fb||0);if(i<f.length){this.dataset.fb=i+1;this.src=f[i];}else{this.outerHTML='<div class=\\'img-placeholder\\'>📷</div>';}" loading="lazy">`;
+}
+
+/* ── Group events by year for chapter dividers ── */
+const yearGroups = {};
+events.forEach((ev,i)=>{
+  const y=ev[0];
+  if(!yearGroups[y])yearGroups[y]=[];
+  yearGroups[y].push(i);
+});
+
+/* ── Build slide list ──
+   Each event gets its OWN dedicated slide.
+   When a year has more than 1 event, insert a year-divider slide first.
+*/
+const slideList = []; // {type:'photo',evIdx} | {type:'year',year,group,count}
+const years = Object.keys(yearGroups).sort((a,b)=>+a-+b);
+years.forEach(y=>{
+  const idxs = yearGroups[y];
+  const ev0 = events[idxs[0]];
+  if(idxs.length > 1){
+    slideList.push({type:'year', year:+y, group:ev0[4], count:idxs.length});
+  }
+  idxs.forEach(i=>slideList.push({type:'photo', evIdx:i}));
+});
+
+/* ── Transitions ── */
+const TRANS = ['fade','sl','sl','zoom','fade','sl','zoom'];
+let tIdx=0;
+function pickTrans(){const t=TRANS[tIdx%TRANS.length];tIdx++;return t;}
+
+/* ── State ── */
+let cur=0;
+let playing=false;
+let timer=null;
+const SPEEDS=[2000,3000,5000,8000];
+let spdIdx=1;
+let speed=SPEEDS[spdIdx];
+let filtered=slideList.map((_,i)=>i);
+
+const stage=document.getElementById('stage');
+const domSlides=[];
+
+/* ── Build DOM ── */
+slideList.forEach((sl,si)=>{
+  const div=document.createElement('div');
+  div.className='slide';
+  div.dataset.si=si;
+
+  if(sl.type==='year'){
+    div.classList.add('year-div');
+    div.innerHTML=`
+      <div class="img-area">
+        <div class="ydiv-num">${sl.year}</div>
+        <div class="ydiv-label">${sl.group}</div>
+        <div class="ydiv-count">${sl.count} photographs</div>
+        <div class="ydiv-ornament">♥</div>
+      </div>
+      <div class="caption-panel">
+        <div class="cap-meta">
+          <span class="cap-year">${sl.year}</span>
+          <span class="cap-group">${sl.group}</span>
+        </div>
+        <div class="cap-headline">A Year in Their Story</div>
+        <div class="cap-text">${sl.count} photographs from ${sl.year} — ${sl.group.toLowerCase()}.</div>
+      </div>`;
+  } else {
+    const ev=events[sl.evIdx];
+    const [yr,headline,text,murl,group,place,isMil]=ev;
+    const id=xid(murl);
+    const milHtml=isMil?`<div class="mil-badge">Milestone</div>`:'';
+    const placeHtml=place?`<div class="cap-place">📍 ${place}</div>`:'';
+    const milCapHtml=isMil?`<span class="cap-milestone">Milestone</span>`:'';
+    div.innerHTML=`
+      <div class="img-area">
+        ${mkImg(id,headline)}
+        ${milHtml}
+      </div>
+      <div class="caption-panel">
+        <div class="cap-meta">
+          <span class="cap-year">${yr}</span>
+          <span class="cap-group">${group}</span>
+          ${milCapHtml}
+        </div>
+        <div class="cap-headline">${headline}</div>
+        <div class="cap-text">${text}</div>
+        ${placeHtml}
+      </div>`;
+  }
+
+  stage.appendChild(div);
+  domSlides.push(div);
+});
+
+/* ── Preload ── */
+function preload(fi){
+  [-1,0,1,2,3].forEach(off=>{
+    const si=filtered[fi+off];
+    if(si===undefined)return;
+    const img=domSlides[si].querySelector('img[data-id]');
+    if(img&&!img.complete){new Image().src=img.src;}
+  });
+}
+
+/* ── Navigate ── */
+function goTo(fi,dir='right'){
+  if(fi<0||fi>=filtered.length)return;
+  const prevSi=filtered[cur];
+  const nextSi=filtered[fi];
+  if(prevSi===nextSi){cur=fi;updateHUD();return;}
+
+  const t=pickTrans();
+  const inC  = dir==='right' ? `t-${t}-in`  : (t==='sl'?'t-sr-in':`t-${t}-in`);
+  const outC = dir==='right' ? `t-${t}-out` : (t==='sl'?'t-sr-out':`t-${t}-out`);
+
+  const prevEl=domSlides[prevSi];
+  const nextEl=domSlides[nextSi];
+
+  prevEl.classList.remove('active');
+  prevEl.classList.add(outC);
+  setTimeout(()=>prevEl.classList.remove(outC),700);
+
+  nextEl.classList.add(inC,'active');
+  setTimeout(()=>nextEl.classList.remove(inC),800);
+
+  cur=fi;updateHUD();preload(cur);
+}
+
+function updateHUD(){
+  const pct=filtered.length>1?(cur/(filtered.length-1))*100:0;
+  document.getElementById('scrub-fill').style.width=pct+'%';
+  document.getElementById('scrub-thumb').style.left=pct+'%';
+  document.getElementById('counter').textContent=`${cur+1} / ${filtered.length}`;
+  const si=filtered[cur];
+  const sl=slideList[si];
+  let lbl='';
+  if(sl.type==='photo'){const ev=events[sl.evIdx];lbl=`${ev[0]} · ${ev[4]}`;}
+  else{lbl=`${sl.year} · ${sl.count} photos`;}
+  document.getElementById('ch-label').textContent=lbl;
+  document.getElementById('arr-p').disabled=cur===0;
+  document.getElementById('arr-n').disabled=cur===filtered.length-1;
+}
+
+function next(){if(cur<filtered.length-1)goTo(cur+1,'right');else if(playing)stopPlay();}
+function prev(){if(cur>0)goTo(cur-1,'left');}
+
+document.getElementById('arr-p').onclick=()=>{prev();if(playing)resetTimer();};
+document.getElementById('arr-n').onclick=()=>{next();if(playing)resetTimer();};
+
+/* ── Playback ── */
+function startPlay(){
+  playing=true;document.getElementById('btn-play').textContent='⏸';
+  timer=setInterval(()=>{if(cur<filtered.length-1)goTo(cur+1,'right');else stopPlay();},speed);
+}
+function stopPlay(){
+  playing=false;document.getElementById('btn-play').textContent='▶';clearInterval(timer);
+}
+function resetTimer(){clearInterval(timer);timer=setInterval(()=>{if(cur<filtered.length-1)goTo(cur+1,'right');else stopPlay();},speed);}
+document.getElementById('btn-play').onclick=()=>{
+  if(playing)stopPlay();
+  else{if(cur>=filtered.length-1)goTo(0);startPlay();}
+};
+
+/* ── Speed ── */
+document.getElementById('btn-speed').onclick=()=>{
+  spdIdx=(spdIdx+1)%SPEEDS.length;speed=SPEEDS[spdIdx];
+  document.getElementById('btn-speed').textContent=(speed/1000)+'s';
+  if(playing)resetTimer();
+};
+
+/* ── Scrubber ── */
+document.getElementById('scrub').addEventListener('click',e=>{
+  const r=document.getElementById('scrub').getBoundingClientRect();
+  const pct=(e.clientX-r.left)/r.width;
+  const fi=Math.max(0,Math.min(filtered.length-1,Math.round(pct*(filtered.length-1))));
+  goTo(fi);if(playing)resetTimer();
+});
+
+/* ── Keyboard ── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){next();if(playing)resetTimer();}
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){prev();if(playing)resetTimer();}
+  if(e.key===' '){e.preventDefault();document.getElementById('btn-play').click();}
+  if(e.key==='Escape'){stopPlay();document.getElementById('hero').classList.remove('out');}
+});
+
+/* ── Touch swipe ── */
+let tx=null,ty=null;
+stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+stage.addEventListener('touchend',e=>{
+  if(tx===null)return;
+  const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>36){
+    if(dx<0)next();else prev();if(playing)resetTimer();
+  }
+  tx=null;ty=null;
+});
+
+/* ── Chapters ── */
+const allGroups=['All',...new Set(events.map(e=>e[4]))];
+const drawer=document.getElementById('ch-drawer');
+allGroups.forEach(g=>{
+  const btn=document.createElement('button');
+  btn.className='ch-opt'+(g==='All'?' active':'');
+  btn.textContent=g;
+  btn.onclick=()=>{
+    document.querySelectorAll('.ch-opt').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    drawer.classList.remove('open');
+    if(g==='All'){
+      filtered=slideList.map((_,i)=>i);
+    } else {
+      filtered=slideList.map((_,i)=>i).filter(i=>{
+        const sl=slideList[i];
+        if(sl.type==='photo')return events[sl.evIdx][4]===g;
+        if(sl.type==='year')return sl.group===g;
+        return false;
+      });
+    }
+    goTo(0);
+  };
+  drawer.appendChild(btn);
+});
+document.getElementById('ch-btn').onclick=e=>{e.stopPropagation();drawer.classList.toggle('open');};
+document.addEventListener('click',()=>drawer.classList.remove('open'));
+drawer.addEventListener('click',e=>e.stopPropagation());
+
+/* ── Home / QR ── */
+document.getElementById('btn-home').onclick=()=>{stopPlay();document.getElementById('hero').classList.remove('out');};
+document.getElementById('begin-btn').onclick=()=>{document.getElementById('hero').classList.add('out');goTo(0);};
+document.getElementById('btn-qr').onclick=()=>document.getElementById('qr-modal').classList.add('open');
+document.getElementById('qr-close').onclick=()=>document.getElementById('qr-modal').classList.remove('open');
+document.getElementById('qr-modal').onclick=e=>{if(e.target===document.getElementById('qr-modal'))document.getElementById('qr-modal').classList.remove('open');};
+document.getElementById('qr-gen').onclick=()=>{
+  const url=document.getElementById('qr-url').value.trim();if(!url)return;
+  const out=document.getElementById('qr-out');out.innerHTML='';
+  new QRCode(out,{text:url,width:160,height:160,colorDark:'#3D2B0A',colorLight:'#FDF8EF',correctLevel:QRCode.CorrectLevel.H});
+};
+
+/* ── Init ── */
+goTo(0);
+</script>
+</body>
+</html>
