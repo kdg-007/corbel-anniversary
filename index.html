@@ -361,29 +361,707 @@ html,body{height:100%;overflow:hidden;background:var(--dark);}
 </div>
 
 <script>
-const events = [[1960, "Bel’s Graduation", "Before their story became one, Bel had already begun her own path as an educator.", "https://drive.google.com/file/d/12NLN-GtovHqaFCEJyov1AiIyO5QGPoAb/view", "Before Us", "Albay Normal School", false], [1966, "Cornelio’s Graduation", "Cornelio’s own journey began with study, ambition, and a widening view of the world.", "https://drive.google.com/file/d/1aAS7Y-KmZZglZzAuBeIUfvMCJ1w4Mvdq/view", "Before Us", "Ateneo de Manila University", false], [1975, "First Photo Together", "In 1975, two separate stories began to become one shared journey.", "https://drive.google.com/file/d/1bdiiIBTI737g86CYhoVdgQ-DZYt74g_q/view", "The Beginning", "Camalig, Albay", true], [1976, "Wedding Day", "On May 1, 1976, Bel and Cornelio began the journey that would carry them across five decades.", "https://drive.google.com/file/d/13na9BDYqPkAkiJtae9EN8bpL-4_8vtPk/view", "Wedding Day", "Santuario de San Antonio, Forbes Park, Makati", true], [1976, "The First Kiss", "A joyful moment, and the first of many memories as husband and wife.", "https://drive.google.com/file/d/1M7okGmHf8LU31M0g1Ux6nysjdeM9mBOg/view", "Wedding Day", "Santuario de San Antonio, Makati", false], [1976, "With the Wedding Minister", "Their wedding was blessed by Fr. Herman Salvosa, a dear friend and Franciscan priest.", "https://drive.google.com/file/d/1UzCkMu6pK6wcbMorfqmozwzNlVi4Y0P5/view", "Wedding Day", "Santuario de San Antonio, Makati", false], [1976, "Their Parents", "Their marriage joined not only two people, but two families and generations of love.", "https://drive.google.com/file/d/10j2Ua-netxH3UVeD-6-s7_ytVDlIMKZz/view", "Wedding Day", "", false], [1976, "Wedding Group Portrait", "The wedding day gathered the people who stood around them at the start of their life together.", "https://drive.google.com/file/d/15hv95YkIghyVJct_k9bNweBU5wowWp2F/view", "Wedding Day", "Santuario de San Antonio, Makati", false], [1976, "Family Blessings", "The wedding was surrounded by the presence and blessing of their families.", "https://drive.google.com/file/d/1Ny-MMA5NtatS3PFi8S8CmPsNYw24-qUk/view", "Wedding Day", "Santuario de San Antonio, Makati", false], [1976, "Cutting the Wedding Cake", "The celebration continued with family, friends, and the first sweet slice of married life.", "https://drive.google.com/file/d/1cZblcATvcVhc09qfLxRvRMTcQBqHW12g/view", "Wedding Day", "Aberdeen Resto, Makati", false], [1976, "First Home in Cainta", "Their married life took root in a home of their own, where everyday memories began to accumulate.", "https://drive.google.com/file/d/1lsrx6rsTadAyr8Jfw_H23KPmPSRUCV8J/view", "Building a Home", "Kasibulan Village, Cainta, Rizal", false], [1976, "Simple Days at Home", "The early years were not only about ceremonies, but quiet afternoons, routines, and simple happiness.", "https://drive.google.com/file/d/1JhsclzRrCG90RbffwodW4nFUDEvr1w8c/view", "Building a Home", "Cainta, Rizal", false], [1976, "The Friends Who Introduced Them", "Every love story has its helpers; theirs included Kuya Rolly and Ate Auring, who brought them together.", "https://drive.google.com/file/d/12JmyaKg-DCsmqJ9PPmlAAXxp5MmdXQCX/view", "The Beginning", "Cainta, Rizal", false], [1977, "First Wedding Anniversary", "One year later, they returned to where their married life began, marking the first of many anniversaries.", "https://drive.google.com/file/d/19tJFle6p6YeeDGSWiGHjBlEAmpVfpIwu/view", "Building a Home", "Santuario de San Antonio, Makati", false], [1978, "First Trip to Bicol", "Their travels together began early, with a return to Bicol in 1978.", "https://drive.google.com/file/d/1EaN02zvjYBj79FiC4hULA_uBIao1XMlc/view", "Early Journeys", "Bicol", false], [1978, "Cagsawa Ruins", "At Cagsawa, they captured one of the early landmarks of their shared travels.", "https://drive.google.com/file/d/1CBewMp0-CHtFiyBglnpRvy4-powjc2q4/view", "Early Journeys", "Cagsawa Ruins, Albay", false], [1980, "Bel’s Hong Kong Departure", "Bel’s 1980 trip to Hong Kong reflected a life of learning, service, and professional growth.", "https://drive.google.com/file/d/1RiF1W1x5DITJQf1zJt6UG90dVJDQCueM/view", "Purpose and Service", "Hong Kong", false], [1980, "Macao Visit", "Bel’s travels extended to Macao, adding new places and stories to their growing life album.", "https://drive.google.com/file/d/1dwdCw5JJ68ouVxXo2DfRwctC5bQuEj9M/view", "Early Journeys", "Macao", false], [1981, "Cornelio’s First World Trip", "Cornelio’s first trip around the world came through official business, opening another chapter of wider horizons.", "https://drive.google.com/file/d/19gNS97VAiFjBYjrPXWgjyAw9jWEIgen-/view", "Purpose and Service", "United States and Germany", false], [1983, "Bel at the Special Olympics", "Bel served as one of five coaches of the Philippine Delegation to the International Special Olympics.", "https://drive.google.com/file/d/10_J01iWcBqMXKZ8RxUoBLGvIVlyCpcN-/view", "Purpose and Service", "Baton Rouge, Louisiana, USA", true], [1983, "Museum of Natural History", "Her travels in the United States also brought moments of discovery and learning.", "https://drive.google.com/file/d/1I5k6ekyR_oew2VywrvWvmVjbg-b12yzG/view", "Purpose and Service", "New York", false], [1983, "Arlington Visit", "Bel visited President John F. Kennedy’s grave at Arlington Cemetery during her U.S. trip.", "https://drive.google.com/file/d/1IR0Itw81balPJQzJo5FcX_dcgZG82AQ0/view", "Purpose and Service", "Washington, D.C.", false], [1984, "Hidden Valley", "Life together also included rest, leisure, and small escapes close to home.", "https://drive.google.com/file/d/16-UmlX3C-47L1Q6m8cE1Ry6cncy2SxQs/view", "Shared Life", "Alaminos, Laguna", false], [1985, "The First Flood at Home", "Not every memory was easy, but even the difficult days became part of the story they carried together.", "https://drive.google.com/file/d/1DPfurFAYn1QMACa11orsU6rZvNBGvoEJ/view", "Through Difficult Days", "Home", false], [1985, "A Formal Evening", "Their life together was filled with civic, church, and community occasions.", "https://drive.google.com/file/d/12gjtY0nZUNCIEO3JjUXQ_d_g6yZ3TRpe/view", "Family and Community", "Hotel Nikko Manila Garden", false], [1985, "Southern Tour in Cebu", "Their travels around the Philippines brought them to Cebu and the Magellan Cross Shrine.", "https://drive.google.com/file/d/1-Qxv6RyX-npyJWt-s2_au6I5UwnJVATO/view", "Philippine Journeys", "Cebu", false], [1986, "10th Wedding Anniversary", "Ten years after their wedding, they celebrated the first major decade of married life.", "https://drive.google.com/file/d/1NhLxLZQU6uPwdGSbAMCRYLjLomGEjGO7/view", "Milestones", "Home", true], [1986, "Cornelio’s 42nd Birthday", "Birthdays and home celebrations became part of the rhythm of family life.", "https://drive.google.com/file/d/1a-D5BsnQDg5WI4ZGuzOut_q1t0COly5u/view", "Family and Community", "Home", false], [1988, "Banaue Rice Terraces", "They explored the iconic landscapes of the Philippines, including Banaue in 1988.", "https://drive.google.com/file/d/1TUY7u-O5V6W4NB6PcyHhqeGwXfa90sco/view", "Philippine Journeys", "Banaue", false], [1988, "Sagada Cave", "Their travels led them even into the caves of Sagada, adding adventure to their shared life.", "https://drive.google.com/file/d/113Fbqqx_J8keyzWhsZF8Y0jO3hnWMRkK/view", "Philippine Journeys", "Sagada, Mountain Province", false], [1990, "Baguio and PMA", "They visited the Philippine Military Academy in Baguio, another marker in their Philippine travels.", "https://drive.google.com/file/d/1MQ-6_Vgw9YDRUemSvOnacbJkL3czBTZq/view", "Philippine Journeys", "Baguio City", false], [1990, "White Island, Camiguin", "Their journey across the islands brought them to the bright sandbar of White Island.", "https://drive.google.com/file/d/13xfY8YuX3TFbx3C6a-KOKeLSR5Ybowop/view", "Philippine Journeys", "Camiguin", false], [1994, "Chocolate Hills", "In Bohol, they visited one of the country’s most memorable landscapes.", "https://drive.google.com/file/d/122B_fAmRwpLa4Kvn18GWcA2tq_0hGNuk/view", "Philippine Journeys", "Bohol", false], [1994, "Loboc Floating Restaurant", "Their Bohol trip also included lunch on Loboc’s floating restaurant.", "https://drive.google.com/file/d/10Ea-KA86CMmiB8zc6re8AtqgUnguUS5Q/view", "Philippine Journeys", "Loboc, Bohol", false], [1996, "20th Wedding Anniversary", "By 1996, their marriage had reached twenty years - two decades of shared memories.", "https://drive.google.com/file/d/1Ux4bjmZqKPq3zpVOzyekr9vPJ5bOgEau/view", "Milestones", "PEB", true], [1996, "Pico de Loro", "Their life together continued outdoors, with scenic trips and active memories.", "https://drive.google.com/file/d/1RfwFG3zCeuqtycwv4sxcN5f0YA9R0DTI/view", "Philippine Journeys", "Nasugbu, Batangas", false], [1997, "Antipolo View Deck", "At Antipolo, they added another simple travel memory to their growing album.", "https://drive.google.com/file/d/1JcmsWzpzk8KdCXlrJOjd8LDLOHykmhjO/view", "Philippine Journeys", "Antipolo", false], [2000, "Departure for the Holy Land", "In 2000, they set out for their Jubilee Year tour of the Holy Land, Rome, and Lourdes.", "https://drive.google.com/file/d/1WuY5HnDFnPM1c-wWqJrW8MdGuN99JP0P/view", "Faith Pilgrimage", "Hong Kong International Airport", true], [2000, "Church of Cana", "In Cana, their pilgrimage connected their marriage story to a sacred place associated with weddings and blessing.", "https://drive.google.com/file/d/1FDPBMMftYJ1T58h6y32Es58MOAEHbEPE/view", "Faith Pilgrimage", "Cana", false], [2000, "Mt. Tabor", "At Mt. Tabor, they visited the place associated with the Transfiguration.", "https://drive.google.com/file/d/12aBNetcxvWIc2G6M9nf9djm3hGlXjkg6/view", "Faith Pilgrimage", "Mt. Tabor", false], [2000, "Capernaum", "At Capernaum, they visited places tied to the early life of the Church.", "https://drive.google.com/file/d/1eG4SCvnvXLbdq8GJuMMGDyFO63FhpCjp/view", "Faith Pilgrimage", "Capernaum", false], [2000, "Jerusalem from Mt. Olives", "Overlooking Jerusalem, the journey became one of reflection as much as travel.", "https://drive.google.com/file/d/1Rfo0CKZnBn0V4IoJVrFrvnqUH3mxQecW/view", "Faith Pilgrimage", "Mt. Olives, Jerusalem", false], [2000, "Bethlehem", "Their Jubilee Year pilgrimage brought them to the place remembered as the birthplace of Jesus.", "https://drive.google.com/file/d/1AEFuWzK949Vhnm6SiN7DUhsFRfSrew40/view", "Faith Pilgrimage", "Bethlehem", false], [2000, "The Wailing Wall", "Their Jerusalem visit included the Wailing Wall, one of the city’s most enduring sacred places.", "https://drive.google.com/file/d/1K4M8vAq8iTgN8wNajZLmEcwe1lF7KZEZ/view", "Faith Pilgrimage", "Jerusalem", false], [2000, "Dome of the Rock", "Their Holy Land journey placed them before Jerusalem’s most recognizable sacred landmarks.", "https://drive.google.com/file/d/1FY6YpiaxP4Ypo38CMw7ZwdPBFlVFWwPa/view", "Faith Pilgrimage", "Jerusalem", false], [2000, "Church of the Holy Sepulcher", "Inside the Church of the Holy Sepulcher, their pilgrimage reached one of Christianity’s most solemn sites.", "https://drive.google.com/file/d/1Jxh1sOPrn98hK-loDUk45QiLIBvj0IN6/view", "Faith Pilgrimage", "Jerusalem", false], [2000, "Lourdes", "At Lourdes, their pilgrimage continued in a place of prayer, procession, and devotion.", "https://drive.google.com/file/d/1-NPSIhXPikJiVDMfW-v5lt0rRCItjkL0/view", "Faith Pilgrimage", "Lourdes, France", false], [2000, "St. Peter’s Basilica", "In Rome, they stood before St. Peter’s Basilica during their Jubilee Year pilgrimage.", "https://drive.google.com/file/d/180N_fT-RG62tKU-nyuAyID85qfoawFT3/view", "Faith Pilgrimage", "Rome", false], [2000, "Trevi Fountain", "Their European pilgrimage also left room for joyful travel moments in Rome.", "https://drive.google.com/file/d/1vyvk5jjGfPr_YS4OLwF2MNt1JlCSR-a6/view", "Faith Pilgrimage", "Rome", false], [2002, "Paete Falls", "At Matabunca Falls, they returned to Philippine landscapes and family roots.", "https://drive.google.com/file/d/1Cg8Uq0O6XScZyIDY66kbLa9-wDFJrmhE/view", "Philippine Journeys", "Paete, Laguna", false], [2006, "First Boracay Trip", "Boracay became part of their shared travel map, adding sea, sand, and celebration.", "https://drive.google.com/file/d/187EVb7AvbOwMG9t9s3ih_Mytezb-2z-U/view", "Global and Local Adventures", "Boracay", false], [2006, "Macau Evening Stroll", "Their Macau trip added another easygoing chapter of travel together.", "https://drive.google.com/file/d/11cMYlj-vnSJgFJfnn2qxvUXftq5E0JWI/view", "Global and Local Adventures", "Macau", false], [2008, "Ria’s Graduation in Medicine", "Family milestones became part of the story, including Ria’s graduation in medicine.", "https://drive.google.com/file/d/10LuhFG-KzCRV5zSJeIWyavPOjJYC8izN/view", "Family and Legacy", "", true], [2008, "Bird’s Nest Stadium", "In Beijing, they visited landmarks connected with the 2008 Olympic Games.", "https://drive.google.com/file/d/1cC35EznHaf5qdX83KuLiFk_tY1vmJOcS/view", "Global and Local Adventures", "Beijing", false], [2008, "Forbidden City", "Their Beijing visit included the grounds of the Forbidden City.", "https://drive.google.com/file/d/18LwcM4NWr3y6UguAPcWKleZE78cCCvyq/view", "Global and Local Adventures", "Beijing", false], [2008, "Temple of Heaven", "Among century-old trees and grand temples, they experienced historic Beijing together.", "https://drive.google.com/file/d/17INjLj2Vo-IltQ39aSc1xGku9uLQE2dG/view", "Global and Local Adventures", "Beijing", false], [2008, "Palawan Underground River", "In Palawan, they reached the entrance of the Underground River, one of the country’s natural wonders.", "https://drive.google.com/file/d/1IGVjAX4qpWEGId-hmoYAeeP0QPIQUDGH/view", "Global and Local Adventures", "Palawan", false], [2009, "Singapore Sojourn", "Singapore became another stop in their continuing life of travel and discovery.", "https://drive.google.com/file/d/1GgAAW-8xTltyz9j37ZqzIEPlAhInqEkv/view", "Global and Local Adventures", "Singapore", false], [2010, "Wedding Sponsors", "Their marriage also placed them in the lives of other couples as sponsors and witnesses.", "https://drive.google.com/file/d/156DXWQW4_iW8Ya8HE8Xm4BlvDbv5O770/view", "Family and Legacy", "", false], [2010, "Recovery at Home", "After Cornelio’s quadruple bypass operation, home became a place of recovery, care, and gratitude.", "https://drive.google.com/file/d/1bCI_K0eEguKnsy_uMmjIjzGRUtjjVgCT/view", "Through Difficult Days", "Home", true], [2011, "Bali Escapade", "Their first Bali escapade added temples, culture, and new scenery to their shared adventures.", "https://drive.google.com/file/d/1DLFTj7dF5kol2UKV2JCoxbWEkTiBdmw9/view", "Global and Local Adventures", "Bali, Indonesia", false], [2011, "Bangkok and the Golden Buddha", "Thailand brought memorable moments of culture, animals, and celebration.", "https://drive.google.com/file/d/1F4lLgiuQtUSZdSEELWGo-fqaqHSxB-PO/view", "Global and Local Adventures", "Bangkok, Thailand", false], [2012, "Bel’s Birthday", "Bel’s birthday celebration in 2012 added another joyful family milestone.", "https://drive.google.com/file/d/13wQ0AONVwaXo4_3zRprl-AjsjMgrRVr3/view", "Family and Legacy", "Sambokojin Resto", false], [2012, "Another Wedding Story", "They continued to stand with others during important family and community occasions.", "https://drive.google.com/file/d/1jTDzZBTkSwV-pPP7Wjwfvz54MwJxQZX3/view", "Family and Legacy", "Silang, Cavite", false], [2012, "Pisa", "In Italy, they stood before the Cathedral and Leaning Tower of Pisa.", "https://drive.google.com/file/d/1IfRylk9GIz6jqvaPowbGFykB7FfrhFVE/view", "European Tour", "Pisa, Italy", false], [2012, "Rome Coliseum", "Their European tour included Rome and one of the ancient world’s most recognizable monuments.", "https://drive.google.com/file/d/1aCBKW6BK6I-t_tKW6pBMotc8VCHnCqDI/view", "European Tour", "Rome", false], [2012, "Venice Gondola Ride", "Venice gave them one of the classic travel memories of Europe: a gondola ride.", "https://drive.google.com/file/d/16D0uuRFLHgqHOUEZW2bd-X2-WXUTuasA/view", "European Tour", "Venice, Italy", false], [2012, "Mt. Titlis", "Their European journey reached the snow and heights of Mt. Titlis in Switzerland.", "https://drive.google.com/file/d/1Rq5CKt_BPIsShlJykRNoX6XtVsb5ZEiI/view", "European Tour", "Engelberg, Switzerland", false], [2016, "40th Wedding Anniversary", "Forty years later, they celebrated a marriage that had already become a lifetime of stories.", "https://drive.google.com/file/d/1A1tLGXAtScyYR9C2GJUtA__hYqsHvuz-/view", "Milestones", "Punta Fuego, Nasugbu, Batangas", true], [2019, "43rd Anniversary in Boracay", "On their 43rd wedding anniversary, they returned to Boracay for sea, sunrise, and another year of choosing each other.", "https://drive.google.com/file/d/1RsYwN_FbG7KRdoH-6pGKyRIkbPktmk6l/view", "Golden Years", "Boracay", true], [2019, "Bel’s 70th Birthday", "Bel’s 70th birthday gathered family and friends in celebration and gratitude.", "https://drive.google.com/file/d/1PIlFbS6A1LT4pZKoXBJYU-q2bY1ZDReR/view", "Golden Years", "Dona Juanita Resto, Barrio Kapitolyo, Pasig", true], [2020, "Bohol Revisited", "The later travel years still carried them to familiar places of beauty and memory.", "https://drive.google.com/file/d/11D82HUhiMcs6AOAgvx1u7p_PKrR5fLST/view", "Golden Years", "Bohol", false], [2020, "Escorting Jun", "Even in the later years, they remained present in the milestones of family and friends.", "https://drive.google.com/file/d/1B0t_tZipwXHIRQJ6mGpl7iC1t419Fl7G/view", "Family and Legacy", "", false], [2020, "Home in the Later Years", "After decades of journeys, home remained one of the most meaningful places in their story.", "https://drive.google.com/file/d/1XCGx6-QaCtoW7zbG00zb2QCE34yFYAcA/view", "Golden Years", "Home", true]];
+const events = [
+  [
+    1960,
+    "Bel’s Graduation",
+    "Before their story became one, Bel had already begun her own path as an educator.",
+    "1960s_Graduation_Bel.jpg",
+    "Before Us",
+    "Albay Normal School",
+    false
+  ],
+  [
+    1966,
+    "Cornelio’s Graduation",
+    "Cornelio’s own journey began with study, ambition, and a widening view of the world.",
+    "1966_Graduation_Cornelio.jpg",
+    "Before Us",
+    "Ateneo de Manila University",
+    false
+  ],
+  [
+    1975,
+    "First Photo Together",
+    "In 1975, two separate stories began to become one shared journey.",
+    "1975_FirstPhoto_Together.jpg",
+    "The Beginning",
+    "Camalig, Albay",
+    true
+  ],
+  [
+    1976,
+    "Wedding Day",
+    "On May 1, 1976, Bel and Cornelio began the journey that would carry them across five decades.",
+    "1976_Wedding_Main.jpg",
+    "Wedding Day",
+    "Santuario de San Antonio, Forbes Park, Makati",
+    true
+  ],
+  [
+    1976,
+    "The First Kiss",
+    "A joyful moment, and the first of many memories as husband and wife.",
+    "1976_Wedding_FirstKiss.jpg",
+    "Wedding Day",
+    "Santuario de San Antonio, Makati",
+    false
+  ],
+  [
+    1976,
+    "With the Wedding Minister",
+    "Their wedding was blessed by Fr. Herman Salvosa, a dear friend and Franciscan priest.",
+    "1976_Wedding_Ceremony.jpg",
+    "Wedding Day",
+    "Santuario de San Antonio, Makati",
+    false
+  ],
+  [
+    1976,
+    "Their Parents",
+    "Their marriage joined not only two people, but two families and generations of love.",
+    "1976_Wedding_Parents.jpg",
+    "Wedding Day",
+    "",
+    false
+  ],
+  [
+    1976,
+    "Wedding Group Portrait",
+    "The wedding day gathered the people who stood around them at the start of their life together.",
+    "1976_Wedding_Group.jpg",
+    "Wedding Day",
+    "Santuario de San Antonio, Makati",
+    false
+  ],
+  [
+    1976,
+    "Family Blessings",
+    "The wedding was surrounded by the presence and blessing of their families.",
+    "1976_Wedding_FormalPortrait.jpg",
+    "Wedding Day",
+    "Santuario de San Antonio, Makati",
+    false
+  ],
+  [
+    1976,
+    "Cutting the Wedding Cake",
+    "The celebration continued with family, friends, and the first sweet slice of married life.",
+    "1976_Wedding_Cake.jpg",
+    "Wedding Day",
+    "Aberdeen Resto, Makati",
+    false
+  ],
+  [
+    1976,
+    "First Home in Cainta",
+    "Their married life took root in a home of their own, where everyday memories began to accumulate.",
+    "1976_FirstHome_Cainta.jpg",
+    "Building a Home",
+    "Kasibulan Village, Cainta, Rizal",
+    false
+  ],
+  [
+    1976,
+    "Simple Days at Home",
+    "The early years were not only about ceremonies, but quiet afternoons, routines, and simple happiness.",
+    "1976_Home_Lawn.jpg",
+    "Building a Home",
+    "Cainta, Rizal",
+    false
+  ],
+  [
+    1976,
+    "The Friends Who Introduced Them",
+    "Every love story has its helpers; theirs included Kuya Rolly and Ate Auring, who brought them together.",
+    "1976_Introducers_Visit.jpg",
+    "The Beginning",
+    "Cainta, Rizal",
+    false
+  ],
+  [
+    1977,
+    "First Wedding Anniversary",
+    "One year later, they returned to where their married life began, marking the first of many anniversaries.",
+    "1977_Anniversary1.jpg",
+    "Building a Home",
+    "Santuario de San Antonio, Makati",
+    false
+  ],
+  [
+    1978,
+    "First Trip to Bicol",
+    "Their travels together began early, with a return to Bicol in 1978.",
+    "1978_Travel_Bicol.jpg",
+    "Early Journeys",
+    "Bicol",
+    false
+  ],
+  [
+    1978,
+    "Cagsawa Ruins",
+    "At Cagsawa, they captured one of the early landmarks of their shared travels.",
+    "1978_Travel_Cagsawa.jpg",
+    "Early Journeys",
+    "Cagsawa Ruins, Albay",
+    false
+  ],
+  [
+    1980,
+    "Bel’s Hong Kong Departure",
+    "Bel’s 1980 trip to Hong Kong reflected a life of learning, service, and professional growth.",
+    "1980_Travel_HongKong.jpg",
+    "Purpose and Service",
+    "Hong Kong",
+    false
+  ],
+  [
+    1980,
+    "Macao Visit",
+    "Bel’s travels extended to Macao, adding new places and stories to their growing life album.",
+    "1980_Travel_Macao.jpg",
+    "Early Journeys",
+    "Macao",
+    false
+  ],
+  [
+    1981,
+    "Cornelio’s First World Trip",
+    "Cornelio’s first trip around the world came through official business, opening another chapter of wider horizons.",
+    "1981_Travel_US.jpg",
+    "Purpose and Service",
+    "United States and Germany",
+    false
+  ],
+  [
+    1983,
+    "Bel at the Special Olympics",
+    "Bel served as one of five coaches of the Philippine Delegation to the International Special Olympics.",
+    "1983_Service_SpecialOlympics.jpg",
+    "Purpose and Service",
+    "Baton Rouge, Louisiana, USA",
+    true
+  ],
+  [
+    1983,
+    "Museum of Natural History",
+    "Her travels in the United States also brought moments of discovery and learning.",
+    "1983_Travel_MuseumNY.jpg",
+    "Purpose and Service",
+    "New York",
+    false
+  ],
+  [
+    1983,
+    "Arlington Visit",
+    "Bel visited President John F. Kennedy’s grave at Arlington Cemetery during her U.S. trip.",
+    "1983_Travel_WashingtonDC.jpg",
+    "Purpose and Service",
+    "Washington, D.C.",
+    false
+  ],
+  [
+    1984,
+    "Hidden Valley",
+    "Life together also included rest, leisure, and small escapes close to home.",
+    "1984_Travel_HiddenValley.jpg",
+    "Shared Life",
+    "Alaminos, Laguna",
+    false
+  ],
+  [
+    1985,
+    "The First Flood at Home",
+    "Not every memory was easy, but even the difficult days became part of the story they carried together.",
+    "1985_Event_Flood.jpg",
+    "Through Difficult Days",
+    "Home",
+    false
+  ],
+  [
+    1985,
+    "A Formal Evening",
+    "Their life together was filled with civic, church, and community occasions.",
+    "1985_Event_Formal.jpg",
+    "Family and Community",
+    "Hotel Nikko Manila Garden",
+    false
+  ],
+  [
+    1985,
+    "Southern Tour in Cebu",
+    "Their travels around the Philippines brought them to Cebu and the Magellan Cross Shrine.",
+    "1985_Travel_Cebu.jpg",
+    "Philippine Journeys",
+    "Cebu",
+    false
+  ],
+  [
+    1986,
+    "10th Wedding Anniversary",
+    "Ten years after their wedding, they celebrated the first major decade of married life.",
+    "1986_Anniversary10.jpg",
+    "Milestones",
+    "Home",
+    true
+  ],
+  [
+    1986,
+    "Cornelio’s 42nd Birthday",
+    "Birthdays and home celebrations became part of the rhythm of family life.",
+    "1986_Birthday.jpg",
+    "Family and Community",
+    "Home",
+    false
+  ],
+  [
+    1988,
+    "Banaue Rice Terraces",
+    "They explored the iconic landscapes of the Philippines, including Banaue in 1988.",
+    "1988_Travel_Banaue.jpg",
+    "Philippine Journeys",
+    "Banaue",
+    false
+  ],
+  [
+    1988,
+    "Sagada Cave",
+    "Their travels led them even into the caves of Sagada, adding adventure to their shared life.",
+    "1988_Travel_Sagada.jpg",
+    "Philippine Journeys",
+    "Sagada, Mountain Province",
+    false
+  ],
+  [
+    1990,
+    "Baguio and PMA",
+    "They visited the Philippine Military Academy in Baguio, another marker in their Philippine travels.",
+    "1990_Travel_Baguio.jpg",
+    "Philippine Journeys",
+    "Baguio City",
+    false
+  ],
+  [
+    1990,
+    "White Island, Camiguin",
+    "Their journey across the islands brought them to the bright sandbar of White Island.",
+    "1990_Travel_Camiguin.jpg",
+    "Philippine Journeys",
+    "Camiguin",
+    false
+  ],
+  [
+    1994,
+    "Chocolate Hills",
+    "In Bohol, they visited one of the country’s most memorable landscapes.",
+    "1994_Travel_Bohol.jpg",
+    "Philippine Journeys",
+    "Bohol",
+    false
+  ],
+  [
+    1994,
+    "Loboc Floating Restaurant",
+    "Their Bohol trip also included lunch on Loboc’s floating restaurant.",
+    "1994_Travel_Loboc.jpg",
+    "Philippine Journeys",
+    "Loboc, Bohol",
+    false
+  ],
+  [
+    1996,
+    "20th Wedding Anniversary",
+    "By 1996, their marriage had reached twenty years - two decades of shared memories.",
+    "1996_Anniversary20.jpg",
+    "Milestones",
+    "PEB",
+    true
+  ],
+  [
+    1996,
+    "Pico de Loro",
+    "Their life together continued outdoors, with scenic trips and active memories.",
+    "1996_Travel_PicoDeLoro.jpg",
+    "Philippine Journeys",
+    "Nasugbu, Batangas",
+    false
+  ],
+  [
+    1997,
+    "Antipolo View Deck",
+    "At Antipolo, they added another simple travel memory to their growing album.",
+    "1997_Travel_Antipolo.jpg",
+    "Philippine Journeys",
+    "Antipolo",
+    false
+  ],
+  [
+    2000,
+    "Departure for the Holy Land",
+    "In 2000, they set out for their Jubilee Year tour of the Holy Land, Rome, and Lourdes.",
+    "2000_Travel_Departure.jpg",
+    "Faith Pilgrimage",
+    "Hong Kong International Airport",
+    true
+  ],
+  [
+    2000,
+    "Church of Cana",
+    "In Cana, their pilgrimage connected their marriage story to a sacred place associated with weddings and blessing.",
+    "2000_Faith_Cana.jpg",
+    "Faith Pilgrimage",
+    "Cana",
+    false
+  ],
+  [
+    2000,
+    "Mt. Tabor",
+    "At Mt. Tabor, they visited the place associated with the Transfiguration.",
+    "2000_Faith_MtTabor.jpg",
+    "Faith Pilgrimage",
+    "Mt. Tabor",
+    false
+  ],
+  [
+    2000,
+    "Capernaum",
+    "At Capernaum, they visited places tied to the early life of the Church.",
+    "2000_Faith_Capernaum.jpg",
+    "Faith Pilgrimage",
+    "Capernaum",
+    false
+  ],
+  [
+    2000,
+    "Jerusalem from Mt. Olives",
+    "Overlooking Jerusalem, the journey became one of reflection as much as travel.",
+    "2000_Faith_Jerusalem.jpg",
+    "Faith Pilgrimage",
+    "Mt. Olives, Jerusalem",
+    false
+  ],
+  [
+    2000,
+    "Bethlehem",
+    "Their Jubilee Year pilgrimage brought them to the place remembered as the birthplace of Jesus.",
+    "2000_Faith_Bethlehem.jpg",
+    "Faith Pilgrimage",
+    "Bethlehem",
+    false
+  ],
+  [
+    2000,
+    "The Wailing Wall",
+    "Their Jerusalem visit included the Wailing Wall, one of the city’s most enduring sacred places.",
+    "2000_Faith_WailingWall.jpg",
+    "Faith Pilgrimage",
+    "Jerusalem",
+    false
+  ],
+  [
+    2000,
+    "Dome of the Rock",
+    "Their Holy Land journey placed them before Jerusalem’s most recognizable sacred landmarks.",
+    "2000_Faith_DomeOfRock.jpg",
+    "Faith Pilgrimage",
+    "Jerusalem",
+    false
+  ],
+  [
+    2000,
+    "Church of the Holy Sepulcher",
+    "Inside the Church of the Holy Sepulcher, their pilgrimage reached one of Christianity’s most solemn sites.",
+    "2000_Faith_HolySepulcher.jpg",
+    "Faith Pilgrimage",
+    "Jerusalem",
+    false
+  ],
+  [
+    2000,
+    "Lourdes",
+    "At Lourdes, their pilgrimage continued in a place of prayer, procession, and devotion.",
+    "2000_Faith_Lourdes.jpg",
+    "Faith Pilgrimage",
+    "Lourdes, France",
+    false
+  ],
+  [
+    2000,
+    "St. Peter’s Basilica",
+    "In Rome, they stood before St. Peter’s Basilica during their Jubilee Year pilgrimage.",
+    "2000_Faith_Rome.jpg",
+    "Faith Pilgrimage",
+    "Rome",
+    false
+  ],
+  [
+    2000,
+    "Trevi Fountain",
+    "Their European pilgrimage also left room for joyful travel moments in Rome.",
+    "2000_Travel_Trevi.jpg",
+    "Faith Pilgrimage",
+    "Rome",
+    false
+  ],
+  [
+    2002,
+    "Paete Falls",
+    "At Matabunca Falls, they returned to Philippine landscapes and family roots.",
+    "2002_Travel_PaeteFalls.jpg",
+    "Philippine Journeys",
+    "Paete, Laguna",
+    false
+  ],
+  [
+    2006,
+    "First Boracay Trip",
+    "Boracay became part of their shared travel map, adding sea, sand, and celebration.",
+    "2006_Travel_Boracay.jpg",
+    "Global and Local Adventures",
+    "Boracay",
+    false
+  ],
+  [
+    2006,
+    "Macau Evening Stroll",
+    "Their Macau trip added another easygoing chapter of travel together.",
+    "2006_Travel_Macau.jpg",
+    "Global and Local Adventures",
+    "Macau",
+    false
+  ],
+  [
+    2008,
+    "Ria’s Graduation in Medicine",
+    "Family milestones became part of the story, including Ria’s graduation in medicine.",
+    "2008_Family_Graduation.jpg",
+    "Family and Legacy",
+    "",
+    true
+  ],
+  [
+    2008,
+    "Bird’s Nest Stadium",
+    "In Beijing, they visited landmarks connected with the 2008 Olympic Games.",
+    "2008_Travel_BirdsNest.jpg",
+    "Global and Local Adventures",
+    "Beijing",
+    false
+  ],
+  [
+    2008,
+    "Forbidden City",
+    "Their Beijing visit included the grounds of the Forbidden City.",
+    "2008_Travel_China.jpg",
+    "Global and Local Adventures",
+    "Beijing",
+    false
+  ],
+  [
+    2008,
+    "Temple of Heaven",
+    "Among century-old trees and grand temples, they experienced historic Beijing together.",
+    "2008_Travel_ChinaTemple.jpg",
+    "Global and Local Adventures",
+    "Beijing",
+    false
+  ],
+  [
+    2008,
+    "Palawan Underground River",
+    "In Palawan, they reached the entrance of the Underground River, one of the country’s natural wonders.",
+    "2008_Travel_Palawan.jpg",
+    "Global and Local Adventures",
+    "Palawan",
+    false
+  ],
+  [
+    2009,
+    "Singapore Sojourn",
+    "Singapore became another stop in their continuing life of travel and discovery.",
+    "2009_Travel_Singapore.jpg",
+    "Global and Local Adventures",
+    "Singapore",
+    false
+  ],
+  [
+    2010,
+    "Wedding Sponsors",
+    "Their marriage also placed them in the lives of other couples as sponsors and witnesses.",
+    "2010_Event_WeddingSponsor.jpg",
+    "Family and Legacy",
+    "",
+    false
+  ],
+  [
+    2010,
+    "Recovery at Home",
+    "After Cornelio’s quadruple bypass operation, home became a place of recovery, care, and gratitude.",
+    "2010_Health_BypassRecovery.jpg",
+    "Through Difficult Days",
+    "Home",
+    true
+  ],
+  [
+    2011,
+    "Bali Escapade",
+    "Their first Bali escapade added temples, culture, and new scenery to their shared adventures.",
+    "2011_Travel_Bali.jpg",
+    "Global and Local Adventures",
+    "Bali, Indonesia",
+    false
+  ],
+  [
+    2011,
+    "Bangkok and the Golden Buddha",
+    "Thailand brought memorable moments of culture, animals, and celebration.",
+    "2011_Travel_Thailand.jpg",
+    "Global and Local Adventures",
+    "Bangkok, Thailand",
+    false
+  ],
+  [
+    2012,
+    "Bel’s Birthday",
+    "Bel’s birthday celebration in 2012 added another joyful family milestone.",
+    "2012_Birthday_Bel.jpg",
+    "Family and Legacy",
+    "Sambokojin Resto",
+    false
+  ],
+  [
+    2012,
+    "Another Wedding Story",
+    "They continued to stand with others during important family and community occasions.",
+    "2012_Event_Wedding.jpg",
+    "Family and Legacy",
+    "Silang, Cavite",
+    false
+  ],
+  [
+    2012,
+    "Pisa",
+    "In Italy, they stood before the Cathedral and Leaning Tower of Pisa.",
+    "2012_Travel_Pisa.jpg",
+    "European Tour",
+    "Pisa, Italy",
+    false
+  ],
+  [
+    2012,
+    "Rome Coliseum",
+    "Their European tour included Rome and one of the ancient world’s most recognizable monuments.",
+    "2012_Travel_RomeColiseum.jpg",
+    "European Tour",
+    "Rome",
+    false
+  ],
+  [
+    2012,
+    "Venice Gondola Ride",
+    "Venice gave them one of the classic travel memories of Europe: a gondola ride.",
+    "2012_Travel_Venice.jpg",
+    "European Tour",
+    "Venice, Italy",
+    false
+  ],
+  [
+    2012,
+    "Mt. Titlis",
+    "Their European journey reached the snow and heights of Mt. Titlis in Switzerland.",
+    "2012_Travel_Switzerland.jpg",
+    "European Tour",
+    "Engelberg, Switzerland",
+    false
+  ],
+  [
+    2016,
+    "40th Wedding Anniversary",
+    "Forty years later, they celebrated a marriage that had already become a lifetime of stories.",
+    "2016_Anniversary40_Alt.jpg",
+    "Milestones",
+    "Punta Fuego, Nasugbu, Batangas",
+    true
+  ],
+  [
+    2018,
+    "Recognition and Creative Legacy",
+    "Cornelio’s work and recognition became part of the family’s larger legacy, showing a life that continued to create and contribute.",
+    "2018_Recognition.jpg",
+    "Family and Legacy",
+    "",
+    false
+  ],
+  [
+    2019,
+    "43rd Anniversary in Boracay",
+    "On their 43rd wedding anniversary, they returned to Boracay for sea, sunrise, and another year of choosing each other.",
+    "2019_Anniversary43_Boracay.jpg",
+    "Golden Years",
+    "Boracay",
+    true
+  ],
+  [
+    2019,
+    "Bel’s 70th Birthday",
+    "Bel’s 70th birthday gathered family and friends in celebration and gratitude.",
+    "2019_Birthday70.jpg",
+    "Golden Years",
+    "Dona Juanita Resto, Barrio Kapitolyo, Pasig",
+    true
+  ],
+  [
+    2020,
+    "Bohol Revisited",
+    "The later travel years still carried them to familiar places of beauty and memory.",
+    "2020_Bohol.jpg",
+    "Golden Years",
+    "Bohol",
+    false
+  ],
+  [
+    2020,
+    "Escorting Jun",
+    "Even in the later years, they remained present in the milestones of family and friends.",
+    "2020_Jun_Wedding.jpg",
+    "Family and Legacy",
+    "",
+    false
+  ],
+  [
+    2020,
+    "Books During the Pandemic",
+    "The books completed during the pandemic became a quiet expression of legacy, creativity, and the life they continued to share at home.",
+    "2020_Legacy_Books.jpg",
+    "Golden Years",
+    "Home",
+    true
+  ],
+  [
+    2020,
+    "Home in the Later Years",
+    "What began as a simple house in 1976 has become a home shaped by decades of love, sacrifice, and shared memories. In the end, it was never about where they lived—but that they built it together.",
+    "2020_Home_Final.jpg",
+    "Golden Years",
+    "Home",
+    true
+  ]
+];
 
 /* ── Helpers ── */
-function xid(url){const m=url.match(/\/d\/([a-zA-Z0-9_-]+)/);return m?m[1]:null;}
-function imgUrl(id){
-  // Use uc?export=view which works better cross-origin on mobile
-  return`https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const ASSET_BASE = 'https://raw.githubusercontent.com/kdg-007/corbel-anniversary/main/'; // Raw GitHub image base URL.
+
+function assetUrl(path){
+  if(!path) return '';
+  if(/^https?:\/\//i.test(path)) return path;
+  return ASSET_BASE + encodeURI(path);
 }
-function mkImg(id,alt){
-  if(!id)return`<div class="img-placeholder"><span>📷</span><span>Photo unavailable</span></div>`;
-  // Multiple fallback URLs for mobile compatibility
-  return`<img src="${imgUrl(id)}" alt="${alt||''}"
-    data-id="${id}" data-fb="0" loading="lazy"
-    onerror="
-      var fbs=[
-        'https://lh3.googleusercontent.com/d/'+this.dataset.id+'=w1600',
-        'https://drive.google.com/uc?export=view&id='+this.dataset.id,
-        'https://lh3.googleusercontent.com/d/'+this.dataset.id
-      ];
-      var i=parseInt(this.dataset.fb||0);
-      if(i<fbs.length){this.dataset.fb=i+1;this.src=fbs[i];}
-      else{this.outerHTML='<div class=\\'img-placeholder\\'><span>📷</span><span>Photo unavailable</span></div>';}
-    ">`;
+
+function mkImg(src,alt){
+  if(!src)return`<div class="img-placeholder"><span>📷</span><span>Photo unavailable</span></div>`;
+  const safeAlt = String(alt||'').replace(/"/g,'&quot;');
+  return`<img src="${assetUrl(src)}" alt="${safeAlt}" loading="lazy"
+    onerror="this.outerHTML='<div class=\'img-placeholder\'><span>📷</span><span>Photo unavailable</span></div>';">`;
 }
 
 /* ── Group by year ── */
@@ -440,10 +1118,9 @@ slideList.forEach((sl,si)=>{
   } else {
     const ev=events[sl.evIdx];
     const [yr,headline,text,murl,group,place,isMil]=ev;
-    const id=xid(murl);
     div.innerHTML=`
       <div class="img-area">
-        ${mkImg(id,headline)}
+        ${mkImg(murl,headline)}
         ${isMil?'<div class="mil-badge">Milestone</div>':''}
       </div>
       <div class="caption-panel">
@@ -624,7 +1301,7 @@ document.getElementById('btn-home').onclick=()=>{
 };
 
 /* ── QR — auto-generate with the GitHub Pages URL ── */
-const SITE_URL='https://kdg-007.github.io/corbel-anniversary';
+const SITE_URL='https://kdg-007.github.io/corbel-anniversary/';
 document.getElementById('btn-qr').onclick=()=>{
   document.getElementById('qr-modal').classList.add('open');
   const out=document.getElementById('qr-out');
