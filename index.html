@@ -296,6 +296,7 @@ for(var yi=0;yi<years.length;yi++){
 
 // State
 var cur = 0;
+var loadTicket = 0; // prevents stale image loads
 var filtered = [];
 for(var i=0;i<slides.length;i++) filtered.push(i);
 var playing = false;
@@ -326,7 +327,7 @@ function show(si){
   var sl = slides[filtered[si]];
   if(!sl) return;
 
-  // Update caption & HUD regardless
+  // Update HUD
   var pct = filtered.length>1 ? (si/(filtered.length-1))*100 : 0;
   scrubF.style.width = pct+'%';
   scrubT.style.left  = pct+'%';
@@ -335,7 +336,6 @@ function show(si){
   document.getElementById('arr-n').disabled = si===filtered.length-1;
 
   if(sl.type==='year'){
-    // Year divider
     imgEl.style.display = 'none';
     loader.classList.add('hidden');
     milBadge.classList.add('hidden');
@@ -352,37 +352,46 @@ function show(si){
     capPl.innerHTML      = '';
     chLbl.textContent    = sl.year+' · '+sl.count+' photos';
   } else {
-    // Photo slide
     var ev = events[sl.evIdx];
     var yr=ev[0],headline=ev[1],text=ev[2],url=ev[3],group=ev[4],place=ev[5],isMil=ev[6];
 
+    // Update caption IMMEDIATELY — never wait for image
     capYear.textContent  = yr;
     capGrp.textContent   = group;
     capHead.textContent  = headline;
     capTxt.textContent   = text;
     capPl.innerHTML      = place ? '&#128205; '+place : '';
     chLbl.textContent    = yr+' · '+group;
-
     if(isMil){ milBadge.classList.remove('hidden'); }
     else { milBadge.classList.add('hidden'); }
 
-    // Load image
+    // Show loader, hide old image
     yearCard.classList.add('hidden');
     imgEl.style.display = 'none';
     loader.classList.remove('hidden');
 
+    // Use a ticket to prevent stale image loads from showing
+    var myTicket = ++loadTicket;
     var img = new Image();
+
     img.onload = function(){
+      // Only show if user hasn't moved to another slide
+      if(myTicket !== loadTicket) return;
       loader.classList.add('hidden');
       imgEl.src = this.src;
       imgEl.style.display = 'block';
     };
+
     img.onerror = function(){
+      if(myTicket !== loadTicket) return;
       loader.classList.add('hidden');
       yearCard.classList.remove('hidden');
-      yearCard.innerHTML = '<div style="font-size:3rem;opacity:.2">&#128247;</div>'+
-        '<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:12px">Photo unavailable</div>';
+      yearCard.innerHTML =
+        '<div style="font-size:2.5rem;opacity:.2">&#128247;</div>'+
+        '<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;'+
+        'color:rgba(255,255,255,.2);margin-top:12px">Photo unavailable</div>';
     };
+
     img.src = url;
   }
 }
